@@ -1,14 +1,26 @@
-import { q } from '@/lib/db'
+import postgres from 'postgres'
 
 export const dynamic = 'force-dynamic'
+export const maxDuration = 60
 
 // TEMPORARY diagnostics: timings only, no secrets.
 export async function GET() {
-  const out: Record<string, unknown> = { node: process.version, region: process.env.VERCEL_REGION, host: (process.env.DATABASE_URL || '').split('@')[1]?.split('/')[0], urlLen: (process.env.DATABASE_URL || '').length }
-  for (const [k, sql] of [['one', 'select 1 as x'], ['timeout', 'show statement_timeout'], ['pages', 'select count(*)::int c from pages'], ['hero', "select length(html) l from pages where path = '_home_hero'"]] as const) {
+  const url = process.env.DATABASE_URL || ''
+  const out: Record<string, unknown> = { node: process.version }
+  const variants: [string, string, any][] = [
+    ['6543 params unsafe', url, { prepare: false }],
+    ['6543 params prepared', url, { prepare: true }],
+    ['5432 params unsafe', url.replace(':6543/', ':5432/'), { prepare: false }],
+    ['5432 params prepared', url.replace(':6543/', ':5432/'), { prepare: true }],
+  ]
+  for (const [name, u, opt] of variants) {
+    const sql = postgres(u, { max: 1, ssl: 'require', connect_timeout: 10, ...opt })
     const t = Date.now()
-    try { out[k] = { ms: Date.now() - t, r: (await Promise.race([q(sql), new Promise((_, rej) => setTimeout(() => rej(new Error('app-timeout 8s')), 8000))])) } } catch (e: any) { out[k] = { ms: Date.now() - t, err: `${e.code ?? ''} ${e.message}`.slice(0, 160) } }
-    if ((out[k] as any).err) { (out[k] as any).ms = Date.now() - t }
+    try {
+      const r = await Promise.race([sql.unsafe('select $1::text as x', ['hi']), new Promise((_, rej) => setTimeout(() => rej(new Error('app-timeout 6s')), 6000))])
+      out[name] = { ms: Date.now() - t, ok: JSON.stringify(r) }
+    } catch (e: any) { out[name] = { ms: Date.now() - t, err: `${e.code ?? ''} ${e.message}`.slice(0, 120) } }
+    sql.end({ timeout: 1 }).catch(() => {})
   }
   return Response.json(out)
 }
