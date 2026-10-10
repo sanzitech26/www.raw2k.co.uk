@@ -10,7 +10,7 @@ export default async function Account({ searchParams }: { searchParams: Promise<
       <h4>Login details</h4><Flash saved={sp.saved} error={sp.error} />
       <div className="adm-card" style={{ maxWidth: 560 }}>
         <strong>Handing the site to a new owner?</strong>
-        <p>Change the email to the new owner&apos;s address and set a new password below, then give them the details. They can sign in and change both again here at any time. A changed email may need confirming from the inbox, depending on your Supabase email settings.</p>
+        <p>Change the email to the new owner&apos;s address and set a new password below, then give them the details. They can sign in and change both again here at any time.</p>
       </div>
       <form action={saveAccount} className="adm-card" style={{ maxWidth: 560 }}>
         <label>Login email</label><input name="email" type="email" defaultValue={await currentEmail()} required />

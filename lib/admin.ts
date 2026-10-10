@@ -45,8 +45,8 @@ export const isAdmin = async () => !!(await session())
 export async function requireAdmin() { if (!(await isAdmin())) redirect('/admin/login') }
 export const currentEmail = async () => (await session())?.email ?? ''
 
-// Re-verifies the current password with Supabase, then updates the Supabase user. A changed email may need confirming
-// from the inbox, depending on your Supabase "Confirm email" setting.
+// Re-verifies the current password with Supabase, then updates the Supabase user. The change is instant when Supabase has
+// "Confirm email" and "Secure email change" turned off; otherwise it stays pending and we say so.
 export async function changeCredentials(current: string, email: string, password: string) {
   const me = await currentEmail()
   const u = await signIn(me, current)
@@ -58,6 +58,9 @@ export async function changeCredentials(current: string, email: string, password
   if (password) body.password = password
   if (!Object.keys(body).length) return ''
   const r = await gotrue('user', { method: 'PUT', token: u.token, body: JSON.stringify(body) })
-  if (!r.ok) return (await r.json().catch(() => ({}))).msg || 'Supabase rejected the change.'
+  const j = await r.json().catch(() => ({}))
+  if (!r.ok) return j.msg || 'Supabase rejected the change.'
+  // new_email is set while Supabase is still waiting for an email confirmation
+  if (body.email && j.new_email) return 'Supabase has not applied the new email because email confirmation is switched on in your Supabase project. Turn off "Confirm email" and "Secure email change" (Authentication > Sign In / Providers > Email), then save again.'
   return ''
 }
