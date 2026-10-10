@@ -30,19 +30,18 @@ export default function Header() {
                 {mega && (
                   <ul className="dropdown-content mega" style={{ display: 'block', opacity: 1, position: 'fixed', left: 0, right: 0, top: 64, width: '100%' }}>
                     <div className="row">
-                      <div className="col m3"><h4>Auctions</h4><hr />
-                        <li><L href="/vehicle-auctions" className="bold" onClick={close}>View All Auctions</L></li><li className="divider" />
-                        {days.map((d) => <li key={d}><L href={`/vehicle-auctions/day/${d}`} onClick={close}>Auctions ending {cap(d)}</L></li>)}
+                      <div className="col m3"><h4>Vehicles for Sale</h4><hr />
+                        <li><L href="/vehicle-auctions" className="bold" onClick={close}>View All Vehicles for Sale</L></li><li className="divider" />
                       </div>
-                      <div className="col m3"><h4>Auction Types</h4><hr />
-                        <li><L href="/vehicle-auctions/featured" className="bold" onClick={close}>View Featured Auctions</L></li><li className="divider" />
+                      <div className="col m3"><h4>Vehicle Types</h4><hr />
+                        <li><L href="/vehicle-auctions/featured" className="bold" onClick={close}>View Featured Vehicles</L></li><li className="divider" />
                         {types.map(([n, h]) => <li key={h}><L href={h} onClick={close}>{n}</L></li>)}
                       </div>
-                      <div className="col m3"><h4>Brand Auctions</h4><hr />
-                        {makes.map((m) => <li key={m}><L href={`/vehicle-auctions/make/${slugify(m)}`} onClick={close}>{m} Auctions</L></li>)}
+                      <div className="col m3"><h4>Shop by Brand</h4><hr />
+                        {makes.map((m) => <li key={m}><L href={`/vehicle-auctions/make/${slugify(m)}`} onClick={close}>{m} Vehicles</L></li>)}
                       </div>
-                      <div className="col m3"><h4>Location Auctions</h4><hr />
-                        {areas.map((a) => <li key={a}><L href={`/vehicle-auctions/area/${slugify(a)}`} onClick={close}>{a} Auctions</L></li>)}
+                      <div className="col m3"><h4>Shop by Location</h4><hr />
+                        {areas.map((a) => <li key={a}><L href={`/vehicle-auctions/area/${slugify(a)}`} onClick={close}>{a} Vehicles</L></li>)}
                       </div>
                     </div>
                   </ul>
@@ -62,15 +61,13 @@ export default function Header() {
         <li><L href="/" onClick={close}>Home</L></li>
         <li><details><summary style={{ padding: '0 32px', lineHeight: '48px', cursor: 'pointer' }}>Buy a Vehicle</summary>
           <ul style={{ paddingLeft: 16 }}>
-            <li><L href="/vehicle-auctions" onClick={close}>View All Auctions</L></li>
-            <li><L href="/vehicle-auctions/featured" onClick={close}>View Featured Auctions</L></li>
+            <li><L href="/vehicle-auctions" onClick={close}>View All Vehicles for Sale</L></li>
+            <li><L href="/vehicle-auctions/featured" onClick={close}>View Featured Vehicles</L></li>
             {types.map(([n, h]) => <li key={h}><L href={h} onClick={close}>{n}</L></li>)}
-            <li><details><summary style={{ padding: '0 32px', lineHeight: '48px' }}>Auctions by Day</summary>
-              <ul>{days.map((d) => <li key={d}><L href={`/vehicle-auctions/day/${d}`} onClick={close}>Auctions ending {cap(d)}</L></li>)}</ul></details></li>
-            <li><details><summary style={{ padding: '0 32px', lineHeight: '48px' }}>Vehicle Make Auctions</summary>
-              <ul>{makes.map((m) => <li key={m}><L href={`/vehicle-auctions/make/${slugify(m)}`} onClick={close}>{m} Auctions</L></li>)}</ul></details></li>
-            <li><details><summary style={{ padding: '0 32px', lineHeight: '48px' }}>Regional Auctions</summary>
-              <ul>{areas.map((a) => <li key={a}><L href={`/vehicle-auctions/area/${slugify(a)}`} onClick={close}>{a} Auctions</L></li>)}</ul></details></li>
+            <li><details><summary style={{ padding: '0 32px', lineHeight: '48px' }}>Shop by Brand</summary>
+              <ul>{makes.map((m) => <li key={m}><L href={`/vehicle-auctions/make/${slugify(m)}`} onClick={close}>{m} Vehicles</L></li>)}</ul></details></li>
+            <li><details><summary style={{ padding: '0 32px', lineHeight: '48px' }}>Shop by Location</summary>
+              <ul>{areas.map((a) => <li key={a}><L href={`/vehicle-auctions/area/${slugify(a)}`} onClick={close}>{a} Vehicles</L></li>)}</ul></details></li>
           </ul></details></li>
         <li><L href="/help/locations" onClick={close}>Our Locations</L></li>
         <li><L href="/scrap-my-car" onClick={close}>Scrap a Vehicle</L></li>
