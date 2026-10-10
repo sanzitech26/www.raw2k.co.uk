@@ -12,7 +12,7 @@ export default async function Enquiry({ params }: { params: Promise<{ id: string
   const [e] = Number.isInteger(id) ? await q('update enquiries set read = true where id = $1 returning id, data, created_at', [id]) : []
   if (!e) notFound()
   const d = e.data || {}
-  const name = [d.forename, d.surname].filter(Boolean).join(' ') || 'Unknown sender'
+  const name = d.name || [d.forename, d.surname].filter(Boolean).join(' ') || 'Unknown sender'
   const subject = d.subject ? `Re: ${d.subject}` : 'Your RAW2K enquiry'
   const row = (label: string, v?: string, href?: string) => v ? (
     <div style={{ marginBottom: 14 }}><div className="hint" style={{ margin: 0 }}>{label}</div>{href ? <a href={href} style={{ color: '#059669', fontWeight: 600 }}>{v}</a> : <div>{v}</div>}</div>
@@ -27,6 +27,7 @@ export default async function Enquiry({ params }: { params: Promise<{ id: string
         <hr style={{ border: 0, borderTop: '1px solid #f1f2f4', margin: '22px 0' }} />
         {row('Email', d.email, `mailto:${d.email}?subject=${encodeURIComponent(subject)}`)}
         {row('Phone', d.tel, d.tel ? `tel:${d.tel}` : undefined)}
+        {d.lot && row('Vehicle', `${d.vehicle} (Lot ${d.lot})`, `/admin/vehicles/${d.lot}`)}
         <div className="acts" style={{ marginTop: 8 }}>
           <a className="ab p" href={`mailto:${d.email}?subject=${encodeURIComponent(subject)}`}><i className="material-icons">reply</i>Reply by email</a>
           <form action={setEnquiryRead}><input type="hidden" name="id" value={e.id} /><input type="hidden" name="read" value="0" /><button className="ab" type="submit">Mark unread</button></form>

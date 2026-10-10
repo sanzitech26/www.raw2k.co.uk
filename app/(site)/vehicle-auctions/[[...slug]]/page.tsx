@@ -1,3 +1,4 @@
+import BuyEnquiry from '@/components/BuyEnquiry'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
@@ -133,8 +134,8 @@ export default async function Page({ params, searchParams }: Props) {
               <BidBox sym={sym} lot={v.lot} init={{ price: v.price, ends_at: ends, bids: v.bids, increment: v.increment }} />
               <div className="row"><div className="col s12 center-align">
                 <i className="material-icons medium white-text">account_circle</i>
-                <h5 className="white-text center-align">Online bidding is not available<br />on this site yet</h5>
-                <div className="row"><Link className="btn btn-small blue darken-1 white-text" href={`/help/contact/${v.lot}`}>Enquire about this lot</Link></div>
+                <h5 className="white-text center-align">Want this vehicle?<br />Register your interest</h5>
+                <div className="row"><BuyEnquiry lot={v.lot} /></div>
                 <p className="lime-text">{d.premium || 'This vehicle has a buyers premium of 6% of the winning bid + £22.5 + VAT. A Vehicle Release Fee of £25 + VAT will be charged which will include the loading of the vehicle if it is required.'}</p>
               </div></div>
               <div className="row">

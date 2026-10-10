@@ -32,7 +32,7 @@ export default async function Enquiries({ searchParams }: { searchParams: Promis
             return (
               <tr key={e.id} style={{ fontWeight: e.read ? 400 : 600 }}>
                 <td style={{ width: 24 }}>{!e.read && <span style={{ display: 'block', width: 9, height: 9, borderRadius: '50%', background: '#10b981' }} title="Unread" />}</td>
-                <td><Link href={`/admin/enquiries/${e.id}`}>{[d.forename, d.surname].filter(Boolean).join(' ') || d.email}<small style={{ display: 'block', color: '#6b7280', fontWeight: 400 }}>{d.email}</small></Link></td>
+                <td><Link href={`/admin/enquiries/${e.id}`}>{d.name || [d.forename, d.surname].filter(Boolean).join(' ') || d.email}<small style={{ display: 'block', color: '#6b7280', fontWeight: 400 }}>{d.email}</small></Link></td>
                 <td>{d.subject || '—'}</td>
                 <td style={{ color: '#4b5563', fontWeight: 400, maxWidth: 360, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{String(d.message ?? '')}</td>
                 <td style={{ whiteSpace: 'nowrap', fontWeight: 400 }}>{fmtDate(e.created_at).slice(0, 16)}</td>
