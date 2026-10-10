@@ -16,10 +16,9 @@ export default function BidBox({ lot, init, sym }: { lot: number; init: S; sym: 
   return (
     <>
       <div className="row"><div className="col s12 center-align grey darken-3">
-        <h5 className="white-text">Current Bid:</h5>
+        <h5 className="white-text">Price:</h5>
         <h4 className="lime-text"><span className="currentprice bold">{sym}<span className="changeprice bold">{s.price.toLocaleString('en-GB')}</span></span></h4>
       </div></div>
-      {ended && <div className="row"><div className="col s12 center-align"><h5 className="white-text">This auction has ended</h5></div></div>}
     </>
   )
 }

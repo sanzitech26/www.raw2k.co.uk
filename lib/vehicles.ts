@@ -4,7 +4,7 @@ export const fmtDate = (d: Date | string) =>
   new Date(d).toLocaleString('en-GB', { timeZone: 'Europe/London', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).replace(',', '')
 
 export const PER_PAGE = 15
-const live = 'ends_at > now()'
+const live = 'ends_at is not null' // cars are for sale, not timed auctions: never hide them when ends_at passes
 
 // Filters mirror the original query params: search make model colour fuel transmission location category drives price=a-b miles=a-b
 // plus path filters: area day agent cat featured

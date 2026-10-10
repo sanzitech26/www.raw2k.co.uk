@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       `Lot: ${v.lot}`, `Vehicle: ${v.title.trim()}`, `Make / model: ${v.make} ${v.model}`, `Colour: ${v.colour}`, `Fuel: ${v.fuel}`, `Transmission: ${v.transmission}`,
       `Mileage: ${v.odometer ? Number(v.odometer).toLocaleString('en-GB') + ' miles' : 'Not recorded'}`, `Type: ${v.type}`, `Category: ${v.category}`,
       `Starts: ${yn(v.starts)}   Drives: ${yn(v.drives)}   Keys: ${yn(v.has_keys)}   V5: ${yn(v.has_v5)}`,
-      `Location: ${[d.town || v.location, v.area].filter(Boolean).join(', ')}`, `Current bid: ${money(v.price, s.sym)}`, `Auction ends: ${fmtDate(v.ends_at)}`,
+      `Location: ${[d.town || v.location, v.area].filter(Boolean).join(', ')}`, `Price: ${money(v.price, s.sym)}`,
       `Page: ${site}/vehicle-auctions/${v.slug}`,
     ] : []
     await sendMail({

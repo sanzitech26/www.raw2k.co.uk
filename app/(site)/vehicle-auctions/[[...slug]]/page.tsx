@@ -71,7 +71,7 @@ export default async function Page({ params, searchParams }: Props) {
             <h2 style={{ fontSize: '160%', fontWeight: 300, margin: 0 }} className="grey-text text-darken-1">Lot No: <span className="lime-text bold">{v.lot}</span></h2>
           </div>
           <div className="col s4 right-align" style={{ margin: '2.1rem 0 1.68rem 0', fontSize: '100%' }}>
-            <span style={{ fontWeight: 'bold' }}>AUCTION ENDS IN:<br /><br /><span className="grey-text text-darken-1 timeleft" style={{ fontSize: '130%' }}><Countdown endsAt={ends} /></span></span>
+            <span style={{ fontWeight: 'bold' }}>FOR SALE</span>
           </div>
         </div>
         <div className="row images">
@@ -92,7 +92,7 @@ export default async function Page({ params, searchParams }: Props) {
               <div className="col s12">
                 <h5>Key facts about this <span className="bold">{bodyType}</span>:</h5><br />
                 <div className="row center-align" style={{ marginBottom: 0 }}>
-                  <div className="col s12 center-align miles"><i className="material-icons small grey-text text-darken-1">timer</i> <strong>Ends:</strong> <span className="timeleft"><Countdown endsAt={ends} /></span></div>
+                  <div className="col s12 center-align miles"><i className="material-icons small grey-text text-darken-1">sell</i> <strong>For sale</strong></div>
                   <div className="col s12"><br /></div>
                   <div className="col s12"><div className="row grid" style={{ marginBottom: 0 }}>
                     {cell('format_paint', v.colour)}
@@ -139,10 +139,6 @@ export default async function Page({ params, searchParams }: Props) {
                 <p className="lime-text">{d.premium || 'This vehicle has a buyers premium of 6% of the winning bid + £22.5 + VAT. A Vehicle Release Fee of £25 + VAT will be charged which will include the loading of the vehicle if it is required.'}</p>
               </div></div>
               <div className="row">
-                <div className="col s12 l6"><p className="white-text">Auction Began:<br />{fmtDate(v.started_at)}</p></div>
-                <div className="col s12 l6"><p className="white-text">Auction Ends:<br />{fmtDate(v.ends_at)}</p></div>
-                <div className="col s12 l6"><p className="white-text">Opening Price: {money(v.opening, sym)}</p></div>
-                <div className="col s12 l6"><p className="white-text">Price Increment: {money(v.increment, sym)}</p></div>
                 <div className="col s12"><p className="white-text">Payment Info: <Link className="white-text" href="/help/terms">Standard methods</Link></p></div>
               </div>
             </div></div>

@@ -17,7 +17,7 @@ export default async function VehicleCard({ v, horizontal }: { v: any; horizonta
       </div>
       <div className="card-content">
         <div className="row"><div className="col s12 center-align miles timer-icon-area">
-          <i className="material-icons small grey-text text-darken-1" style={{ verticalAlign: 'middle' }}>timer</i> <strong>Ends:</strong> <span>{fmtDate(v.ends_at)}</span>
+          <i className="material-icons small grey-text text-darken-1" style={{ verticalAlign: 'middle' }}>sell</i> <strong>For Sale</strong>
         </div></div>
         <div className="row" style={{ marginBottom: 0 }}>
           <Cell icon="thumb_up" on={v.starts && v.drives}>{v.starts && v.drives ? 'Starts & Drives' : v.starts ? 'Starts' : 'Non-Runner'}</Cell>
@@ -33,7 +33,7 @@ export default async function VehicleCard({ v, horizontal }: { v: any; horizonta
       </div>
       <div className="card-content grey darken-4 white-text center-align pricearea">
         <div className="row" style={{ marginBottom: 0 }}>
-          <div className="col s6"><span><strong>CURRENT BID:<br /><span className="price">{sym}<span className={`change-price-${v.lot}`}>{v.price.toLocaleString('en-GB')}</span></span></strong></span></div>
+          <div className="col s6"><span><strong>PRICE:<br /><span className="price">{sym}<span className={`change-price-${v.lot}`}>{v.price.toLocaleString('en-GB')}</span></span></strong></span></div>
           <Link className="col s6 viewmore view-details-button white-text waves-effect" href={href}>View Details</Link>
         </div>
       </div>
