@@ -30,3 +30,5 @@
 @keyframes slide-ltr{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @keyframes slide-rtl{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.brand-marquee{overflow-x:auto}.slider-track{animation:none}}
+
+dialog::backdrop{background:rgba(0,0,0,.6)}

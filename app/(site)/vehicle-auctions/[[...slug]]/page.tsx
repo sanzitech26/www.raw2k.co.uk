@@ -135,7 +135,7 @@ export default async function Page({ params, searchParams }: Props) {
               <div className="row"><div className="col s12 center-align">
                 <i className="material-icons medium white-text">account_circle</i>
                 <h5 className="white-text center-align">Want this vehicle?<br />Register your interest</h5>
-                <div className="row"><BuyEnquiry lot={v.lot} /></div>
+                <div className="row"><BuyEnquiry lot={v.lot} title={v.title.trim()} /></div>
                 <p className="lime-text">{d.premium || 'This vehicle has a buyers premium of 6% of the winning bid + £22.5 + VAT. A Vehicle Release Fee of £25 + VAT will be charged which will include the loading of the vehicle if it is required.'}</p>
               </div></div>
               <div className="row">
