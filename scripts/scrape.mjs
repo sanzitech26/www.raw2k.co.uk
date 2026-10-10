@@ -48,7 +48,7 @@ for (const f of existsSync(`${D}/vehicles`) ? readdirSync(`${D}/vehicles`) : [])
   v.images = [...new Set($('a[data-lightbox]').map((_, e) => $(e).attr('href')).get())]
   const cell = (icon) => $('.cell').filter((_, e) => $(e).find('i.material-icons').first().text().trim() === icon).map((_, e) => txt($(e))).get()
   const place = cell('place')[0] || ''
-  const [area, town] = place.split(' / ')
+  const [area, town] = place.replace(/^place\s*/, '').split(' / ')
   const section = (h) => txt($('h5').filter((_, e) => $(e).text().trim().startsWith(h)).first().next('p'))
   const pull = txt($('.pullout-area').first())
   const m = (re) => (pull.match(re) || [])[1]
