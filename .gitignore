@@ -3,3 +3,7 @@ node_modules
 .pglite
 .env*.local
 _crawl
+.vercel
+
+.vercel
+.env*
