@@ -7,7 +7,7 @@ const g = globalThis as any
 
 async function connect() {
   if (process.env.DATABASE_URL) {
-    const sql = postgres(process.env.DATABASE_URL, { prepare: false, max: 1 })
+    const sql = postgres(process.env.DATABASE_URL, { prepare: false, max: 1, ssl: 'require', connect_timeout: 15, idle_timeout: 20 })
     return {
       q: ((t, p = []) => sql.unsafe(t, p as any[])) as Q,
       migrate: () => sql.unsafe(readFileSync('db/schema.sql', 'utf8')),
