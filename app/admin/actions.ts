@@ -12,7 +12,8 @@ const slugify = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').repla
 const refresh = () => revalidatePath('/', 'layout')
 
 export async function loginAction(f: FormData) {
-  redirect((await login(s(f, 'email'), String(f.get('password') ?? ''))) ? '/admin' : '/admin/login?error=1')
+  const r = await login(s(f, 'email'), String(f.get('password') ?? ''))
+  redirect(r === 'ok' ? '/admin' : `/admin/login?error=${r === 'signups' ? 'signups' : '1'}`)
 }
 export async function logoutAction() { await logout(); redirect('/admin/login') }
 

@@ -9,7 +9,8 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
     <div className="adm-card" style={{ maxWidth: 420, margin: '10vh auto' }}>
       <img src="/images/logo.png" alt="RAW2K" style={{ width: 150 }} />
       <h5>Admin login</h5>
-      {error && <div className="msg bad">Incorrect email or password.</div>}
+      {error === 'signups' && <div className="msg bad">Login is blocked for safety: public sign-ups are enabled in Supabase, which would let anyone create an admin account. In Supabase go to Authentication → Sign In / Providers and turn off &quot;Allow new users to sign up&quot;, then try again.</div>}
+      {error && error !== 'signups' && <div className="msg bad">Incorrect email or password.</div>}
       <form action={loginAction}>
         <label htmlFor="email">Email</label><input id="email" name="email" type="email" required autoFocus />
         <label htmlFor="password">Password</label><input id="password" name="password" type="password" required />

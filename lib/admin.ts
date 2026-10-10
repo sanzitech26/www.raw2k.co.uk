@@ -1,17 +1,13 @@
-// Admin sign-in is delegated to Supabase Auth (email + password). After a successful Supabase sign-in we set our own
-// signed, httpOnly cookie. Only ONE Supabase user may be admin: the first user whose email is in ADMIN_EMAILS is
-// pinned by user id (settings.admin_uid), so later email changes keep working and other sign-ups can never get in.
+// Admin sign-in is delegated to Supabase Auth (email + password): EVERY user in the Supabase project (Authentication > Users) is an admin.
+// That is only safe while the public cannot create users, so login is refused unless Supabase has sign-ups disabled.
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { q } from './db'
-import { setSetting } from './settings'
 
 const secret = process.env.AUTH_SECRET || (process.env.NODE_ENV === 'production' ? '' : 'dev-only-secret-change-me')
 const key = new TextEncoder().encode(secret)
 const SB_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const SB_KEY = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-const get = async (k: string) => (await q('select value from settings where key = $1', [k]))[0]?.value as string | undefined
 
 const gotrue = (path: string, init: RequestInit & { token?: string } = {}) =>
   fetch(`${SB_URL}/auth/v1/${path}`, {
@@ -26,21 +22,15 @@ async function signIn(email: string, password: string) {
   return { token: j.access_token as string, uid: j.user.id as string, email: j.user.email as string }
 }
 
-export async function login(email: string, password: string) {
-  if (!secret || !SB_URL || !SB_KEY) return false
+export async function login(email: string, password: string): Promise<'ok' | 'bad' | 'signups'> {
+  if (!secret || !SB_URL || !SB_KEY) return 'bad'
+  const s = await gotrue('settings').then((r) => r.json()).catch(() => null)
+  if (!s || s.disable_signup !== true) return 'signups'
   const u = await signIn(email.trim(), password)
-  if (!u) return false
-  const owner = await get('admin_uid')
-  if (owner) {
-    if (owner !== u.uid) return false
-  } else {
-    const allow = (process.env.ADMIN_EMAILS || '').toLowerCase().split(',').map((s) => s.trim()).filter(Boolean)
-    if (!allow.includes(u.email.toLowerCase())) return false
-    await setSetting('admin_uid', u.uid)
-  }
+  if (!u) return 'bad'
   const jwt = await new SignJWT({ admin: true, email: u.email }).setProtectedHeader({ alg: 'HS256' }).setExpirationTime('7d').sign(key)
   ;(await cookies()).set('admin', jwt, { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', path: '/', maxAge: 604800 })
-  return true
+  return 'ok'
 }
 
 export const logout = async () => (await cookies()).delete('admin')
