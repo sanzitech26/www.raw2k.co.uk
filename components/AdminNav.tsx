@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const main: [string, string, string][] = [['dashboard', 'Dashboard', '/admin'], ['directions_car', 'Vehicles', '/admin/vehicles'], ['format_quote', 'Testimonials', '/admin/testimonials'], ['article', 'Blog posts', '/admin/blog']]
+const main: [string, string, string][] = [['dashboard', 'Dashboard', '/admin'], ['directions_car', 'Vehicles', '/admin/vehicles'], ['format_quote', 'Testimonials', '/admin/testimonials'], ['article', 'Blog posts', '/admin/blog'], ['mail', 'Enquiries', '/admin/enquiries']]
 const support: [string, string, string][] = [['settings', 'Settings', '/admin/settings'], ['lock', 'Login details', '/admin/account']]
 
 export default function AdminNav() {

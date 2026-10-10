@@ -114,3 +114,15 @@ export async function saveAccount(f: FormData) {
   if (s(f, 'email').toLowerCase() !== me.toLowerCase()) { await logout(); redirect('/admin/login?changed=1') }
   redirect('/admin/account?saved=1')
 }
+
+// ---------- enquiries ----------
+export async function deleteEnquiry(f: FormData) {
+  await requireAdmin()
+  await q('delete from enquiries where id = $1', [n(f, 'id')])
+  redirect('/admin/enquiries?saved=1')
+}
+export async function setEnquiryRead(f: FormData) {
+  await requireAdmin()
+  await q('update enquiries set read = $2 where id = $1', [n(f, 'id'), f.get('read') === '1'])
+  redirect('/admin/enquiries')
+}

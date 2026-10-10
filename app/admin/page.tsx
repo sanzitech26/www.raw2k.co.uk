@@ -46,7 +46,7 @@ export default async function Dashboard() {
         </div>
         <div>
           <div className="card">
-            <h2>Latest enquiries</h2><p className="sub">From the contact form.</p>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}><h2>Latest enquiries</h2><Link href="/admin/enquiries" style={{ color: '#059669', fontWeight: 600 }}>View all</Link></div><p className="sub">From the contact form.</p>
             {inbox.map((e) => (
               <div key={e.id} style={{ padding: '10px 0', borderTop: '1px solid #f1f2f4' }}>
                 <b>{[e.data.forename, e.data.surname].filter(Boolean).join(' ') || e.data.email}</b> <span style={{ color: '#6b7280' }}>· {fmtDate(e.created_at).slice(0, 10)}</span>

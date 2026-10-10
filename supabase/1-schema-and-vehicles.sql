@@ -23,6 +23,7 @@ create table if not exists testimonials (
   published bool default true, created_at timestamptz default now());
 alter table news add column if not exists body text;
 create table if not exists images (id serial primary key, mime text not null, data bytea not null, created_at timestamptz default now());
+alter table enquiries add column if not exists read bool default false;
 
 
 -- Lock every table: the public anon key can read/write NOTHING. The website's server connects with the
