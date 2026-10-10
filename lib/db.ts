@@ -8,8 +8,11 @@ const g = globalThis as any
 async function connect() {
   if (process.env.DATABASE_URL) {
     const sql = postgres(process.env.DATABASE_URL, { prepare: false, max: 1, ssl: 'require', connect_timeout: 15, idle_timeout: 20 })
+    // Run queries strictly one at a time: concurrent (pipelined) queries on one connection can wedge Supabase's transaction pooler.
+    let chain: Promise<unknown> = Promise.resolve()
+    const serial = <T,>(fn: () => Promise<T>) => { const r = chain.then(fn, fn); chain = r.catch(() => {}); return r }
     return {
-      q: ((t, p = []) => sql.unsafe(t, p as any[])) as Q,
+      q: ((t, p = []) => serial(() => sql.unsafe(t, p as any[]))) as Q,
       migrate: () => sql.unsafe(readFileSync('db/schema.sql', 'utf8')),
       tx: <T>(fn: (q: Q) => Promise<T>) => sql.begin((s) => fn((t, p = []) => s.unsafe(t, p as any[]))) as Promise<T>,
     }
