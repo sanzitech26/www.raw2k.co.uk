@@ -2,7 +2,7 @@
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { q } from '@/lib/db'
-import { login, logout, requireAdmin, changeCredentials } from '@/lib/admin'
+import { login, logout, requireAdmin, changeCredentials, currentEmail } from '@/lib/admin'
 import { setSetting, CURRENCIES } from '@/lib/settings'
 
 const s = (f: FormData, k: string) => String(f.get(k) ?? '').trim()
@@ -107,6 +107,10 @@ export async function saveSettings(f: FormData) {
 
 export async function saveAccount(f: FormData) {
   await requireAdmin()
+  const me = await currentEmail()
   const err = await changeCredentials(String(f.get('current') ?? ''), s(f, 'email'), String(f.get('password') ?? ''))
-  redirect(err ? `/admin/account?error=${encodeURIComponent(err)}` : '/admin/account?saved=1')
+  if (err) redirect(`/admin/account?error=${encodeURIComponent(err)}`)
+  // the session remembers the old email, so after an email change sign out and make them log in again
+  if (s(f, 'email').toLowerCase() !== me.toLowerCase()) { await logout(); redirect('/admin/login?changed=1') }
+  redirect('/admin/account?saved=1')
 }
