@@ -10,7 +10,7 @@ const yn = (b: boolean) => (b ? 'Yes' : 'No')
 export async function POST(req: Request) {
   const f = Object.fromEntries([...(await req.formData())].map(([k, v]) => [k, String(v).slice(0, 5000)]))
   const json = (req.headers.get('accept') || '').includes('application/json')
-  const back = new URL(req.headers.get('referer') || '/help/contact', req.url)
+  const back = new URL(req.headers.get('referer') || '/contact', req.url)
   const done = (ok: boolean) => {
     if (json) return NextResponse.json({ ok }, { status: ok ? 200 : 400 })
     back.searchParams.set(ok ? 'sent' : 'error', '1')

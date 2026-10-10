@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { getSettings, waLink } from '@/lib/settings'
 
-const links = [['About RAW2K', '/about-us'], ['News', '/news'], ['Terms & Conditions', '/help/terms'], ['Privacy Policy', '/help/privacy-policy'], ['Cookies Policy', '/help/terms/cookies-policy'], ['Help', '/help'], ['Contact Us', '/help/contact']]
+const links = [['About RAW2K', '/about-us'], ['News', '/news'], ['Terms & Conditions', '/help/terms'], ['Privacy Policy', '/help/privacy-policy'], ['Cookies Policy', '/help/terms/cookies-policy'], ['Help', '/help'], ['Contact Us', '/contact']]
 
 export default async function Footer() {
   const st = await getSettings()
@@ -14,7 +14,7 @@ export default async function Footer() {
         </div>
         <div className="col l4 offset-l2 s12">
           <h5 className="white-text">Get in touch</h5>
-          <p className="grey-text text-lighten-4">Using our <Link href="/help/contact" style={{ color: 'white', fontWeight: 'bold' }}>Contact Us</Link> form<br /><br /><strong>Company Number:</strong> 04304063
+          <p className="grey-text text-lighten-4">Using our <Link href="/contact" style={{ color: 'white', fontWeight: 'bold' }}>Contact Us</Link> form<br /><br /><strong>Company Number:</strong> 04304063
             {st.contact_email && <><br /><br /><strong>Email:</strong> <a className="white-text" href={`mailto:${st.contact_email}`}>{st.contact_email}</a></>}
             {st.whatsapp && <><br /><br /><a className="btn green" href={waLink(st.whatsapp)} target="_blank" rel="noopener">WhatsApp us: {st.whatsapp}</a></>}</p>
         </div>

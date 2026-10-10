@@ -50,6 +50,7 @@ export default function Header() {
               <li><L href="/scrap-my-car">Scrap a Vehicle</L></li>
               <li><L href="/help">Help Centre</L></li>
               <li><L href="/news">News</L></li>
+              <li><L href="/contact">Contact Us</L></li>
               <li><L href="/vehicle-auctions" className="btn less-bold z-depth-0 waves-effect waves-light">Vehicle List</L></li>
             </ul>
           )}
@@ -73,6 +74,7 @@ export default function Header() {
         <li><L href="/scrap-my-car" onClick={close}>Scrap a Vehicle</L></li>
         <li><L href="/help" onClick={close}>Help Centre</L></li>
         <li><L href="/news" onClick={close}>News</L></li>
+        <li><L href="/contact" onClick={close}>Contact Us</L></li>
       </ul>
 
     </header>

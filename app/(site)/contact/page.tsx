@@ -11,7 +11,7 @@ export default async function Contact() {
   const s = await getSettings()
   return (
     <>
-      <Breadcrumbs items={[['Help', '/help'], ['Contact Us', '/help/contact']]} />
+      <Breadcrumbs items={[['Contact Us', '/contact']]} />
       <div className="container" style={{ paddingBottom: 48 }}>
         <h1 style={{ fontSize: '2.2rem' }}>Contact us</h1>
         <p className="grey-text">Questions about a vehicle, buying or selling? Send us a message and we&apos;ll get back to you.</p>

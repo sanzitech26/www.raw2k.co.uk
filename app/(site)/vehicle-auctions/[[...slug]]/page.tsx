@@ -152,7 +152,7 @@ export default async function Page({ params, searchParams }: Props) {
                 <p className="center-align white-text">Simply quote the lot number: {v.lot} if on the phone, or alternatively use the help options below.<br /><br /></p>
               </div><br />
               <div className="col s12"><div className="container"><div className="col s12">
-                <div className="row"><div className="col s12"><Link className="btn btn-large waves-effect waves-dark white blue-text text-darken-1" href={`/help/contact/${v.lot}`}>Email Us<i className="material-icons left">email</i></Link></div></div>
+                <div className="row"><div className="col s12"><Link className="btn btn-large waves-effect waves-dark white blue-text text-darken-1" href={`/contact/${v.lot}`}>Email Us<i className="material-icons left">email</i></Link></div></div>
                 <div className="row"><div className="col s12"><Link className="btn btn-large waves-effect waves-dark white blue-text text-darken-1" href="/help">View Help<i className="material-icons left">help</i></Link></div></div>
               </div></div></div>
             </div></div>
