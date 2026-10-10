@@ -51,4 +51,9 @@ on conflict (path) do update set title = excluded.title, description = excluded.
 mkdirSync('supabase', { recursive: true })
 writeFileSync('supabase/1-schema-and-vehicles.sql', `-- RAW2K: database schema only (no vehicles - add cars through /admin/vehicles)\nbegin;\n${schema}\n${rls}\n${comments}\ncommit;\n`)
 writeFileSync('supabase/2-pages-and-news.sql', `-- RAW2K: ${pages.length} content pages + ${news.length} news posts (run AFTER file 1)\nbegin;\n${pages.join('\n')}\n${news.join('\n')}\ncommit;\n`)
+writeFileSync('supabase/3-demo-vehicles.sql', `-- RAW2K: ${vehicles.length} sample vehicles (optional; auctions end within days of running this file)
+begin;
+${vehicles.join('\n')}
+commit;
+`)
 console.log({ vehicles: vehicles.length, pages: pages.length, news: news.length })
