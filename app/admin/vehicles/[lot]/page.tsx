@@ -4,6 +4,7 @@ import { q } from '@/lib/db'
 import { requireAdmin } from '@/lib/admin'
 import { getSettings } from '@/lib/settings'
 import { PageHeader } from '@/components/Flash'
+import ImageField from '@/components/ImageField'
 import { saveVehicle } from '../../actions'
 
 const F = ({ name, label, v = '', type = 'text', w = 'c4', ...r }: any) => (
@@ -48,9 +49,7 @@ export default async function EditVehicle({ params }: { params: Promise<{ lot: s
         <F name="location" label="Town shown on cards" v={v?.location} /><F name="area" label="Region (e.g. North West)" v={d.area} /><F name="town" label="Town (detail page)" v={d.town} />
         <F w="c6" name="stored" label="Stored at (yard name / postcode)" v={d.stored} /><F w="c3" name="vat" label="VAT status" v={d.vat} /><F w="c3" name="fsh" label="Service history" v={d.fsh} />
       </div></div>
-      <div className="card"><h2>Photos</h2><p className="sub">Paste image links, one per line. The first is the main photo.</p><div className="g">
-        <T w="c12" name="images" label="Image URLs" v={(v?.images ?? []).join('\n')} rows={5} />
-      </div><p className="hint">File upload needs a storage key. Tell me which provider you want.</p></div>
+      <div className="card"><h2>Photos</h2><p className="sub">Upload photos from your computer or paste links. Works the same when adding or editing.</p><ImageField initial={v?.images ?? []} /></div>
       <div className="card"><h2>Descriptions</h2><p className="sub">Shown on the vehicle page.</p><div className="g">
         <T name="damage" label="Damage report" v={d.damage} /><T name="extra" label="Extra information" v={d.extra} />
         <T name="viewing" label="Viewing" v={d.viewing} /><T name="delivery" label="Delivery" v={d.delivery} /><T w="c12" name="premium" label="Buyer premium / fees text" v={d.premium} rows={3} />

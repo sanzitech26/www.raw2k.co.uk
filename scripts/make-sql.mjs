@@ -12,7 +12,7 @@ const lit = (s) => { // dollar-quoted literal, tag guaranteed absent from the te
 const arr = (a) => `array(select jsonb_array_elements_text(${lit(JSON.stringify(a))}::jsonb))`
 const bool = (b) => (b ? 'true' : 'false')
 
-const tables = ['users', 'vehicles', 'bids', 'pages', 'news', 'settings', 'testimonials', 'enquiries']
+const tables = ['images', 'users', 'vehicles', 'bids', 'pages', 'news', 'settings', 'testimonials', 'enquiries']
 const rls = `
 -- Lock every table: the public anon key can read/write NOTHING. The website's server connects with the
 -- Postgres connection string (DATABASE_URL), which bypasses RLS, so the app is unaffected.

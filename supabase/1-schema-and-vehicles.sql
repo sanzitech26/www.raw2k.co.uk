@@ -22,10 +22,12 @@ create table if not exists testimonials (
   id serial primary key, name text not null, location text default '', body text not null, rating int default 5,
   published bool default true, created_at timestamptz default now());
 alter table news add column if not exists body text;
+create table if not exists images (id serial primary key, mime text not null, data bytea not null, created_at timestamptz default now());
 
 
 -- Lock every table: the public anon key can read/write NOTHING. The website's server connects with the
 -- Postgres connection string (DATABASE_URL), which bypasses RLS, so the app is unaffected.
+alter table images enable row level security;
 alter table users enable row level security;
 alter table vehicles enable row level security;
 alter table bids enable row level security;

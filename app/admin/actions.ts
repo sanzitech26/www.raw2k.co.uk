@@ -23,7 +23,7 @@ export async function saveVehicle(f: FormData) {
   const title = s(f, 'title')
   if (!title) redirect('/admin/vehicles?error=Title+is+required')
   if (!/^\d{4}-\d\d-\d\dT\d\d:\d\d/.test(s(f, 'ends_at'))) redirect('/admin/vehicles?error=Auction+end+date+is+required')
-  const images = s(f, 'images').split(/\s+/).filter((u) => /^https?:\/\//.test(u))
+  const images = s(f, 'images').split(/\s+/).filter((u) => /^(https?:\/\/|\/img\/\d+$)/.test(u))
   const detail = JSON.stringify({
     area: s(f, 'area'), town: s(f, 'town'), stored: s(f, 'stored'), vat: s(f, 'vat'), fsh: s(f, 'fsh'), extra: s(f, 'extra'),
     damage: s(f, 'damage'), viewing: s(f, 'viewing'), delivery: s(f, 'delivery'), premium: s(f, 'premium'), opening: n(f, 'opening'), increment: n(f, 'increment', 10),

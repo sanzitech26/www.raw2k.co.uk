@@ -20,3 +20,4 @@ create table if not exists testimonials (
   id serial primary key, name text not null, location text default '', body text not null, rating int default 5,
   published bool default true, created_at timestamptz default now());
 alter table news add column if not exists body text;
+create table if not exists images (id serial primary key, mime text not null, data bytea not null, created_at timestamptz default now());
