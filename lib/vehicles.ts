@@ -30,4 +30,13 @@ export async function listVehicles(f: Record<string, string | undefined>, page =
   return { rows, total: n as number, pages: Math.max(1, Math.ceil(n / PER_PAGE)) }
 }
 
-export const topPicks = () => q(`select * from vehicles where ${live} order by featured desc, ends_at limit 12`)
+// three makes with the most live lots, up to 10 lots each (homepage sliders)
+export async function brandRows() {
+  const rows = await q(`select * from (
+    select v.*, row_number() over (partition by v.make order by v.featured desc, v.ends_at) rn, dense_rank() over (order by mk.n desc, v.make) rk
+    from vehicles v join (select make, count(*) n from vehicles where ${live} and make <> '' group by make) mk on mk.make = v.make
+    where v.${live}) t where rk <= 3 and rn <= 10 order by rk, rn`)
+  const by = new Map<string, any[]>()
+  for (const r of rows) by.set(r.make, [...(by.get(r.make) ?? []), r])
+  return [...by.entries()]
+}

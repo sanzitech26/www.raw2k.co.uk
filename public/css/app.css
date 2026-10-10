@@ -22,3 +22,11 @@
 .searchresults>.searchoptions{position:static;flex:0 0 320px;width:320px;margin-right:30px;margin-top:70px}
 .searchresults>.l10{flex:1;width:auto;min-width:0}
 }
+.brand-marquee{overflow:hidden;padding:8px 0 24px;height:auto}
+.slider-track{display:flex;width:max-content;animation:slide-ltr linear infinite}
+.slider-track.rtl{animation-name:slide-rtl}
+.slider-track:hover,.slider-track:focus-within{animation-play-state:paused}
+.slide{flex:0 0 400px;padding:0 10px;display:flex}.slide>.card{width:100%;margin:0}
+@keyframes slide-ltr{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes slide-rtl{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.brand-marquee{overflow-x:auto}.slider-track{animation:none}}
